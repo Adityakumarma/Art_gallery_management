@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
+import "./index.css"; 
 import Navbar from "./Artist/components/Navbar.jsx";
 import Footer from "./Artist/components/Footer.jsx";
 
@@ -11,20 +11,21 @@ import Editwork from "./Artist/pages/Editwork.jsx";
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <div className="container my-4">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/add" element={<Addwork />} />
-          <Route path="/view" element={<Viewwork />} />
-          <Route path="/edit/:id" element={<Editwork />} />
-        </Routes>
-      </div>
-      <Footer />
-    </Router>
+     <>
+        <Navbar />
+        <div className="container my-4">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/add" element={<Addwork />} />
+            <Route path="/view" element={<Viewwork />} />
+            <Route path="/edit/:id" element={<Editwork />} />
+          </Routes>
+        </div>
+  
+        <Footer />
+     </>
+   
   );
 }
 
 export default App;
-

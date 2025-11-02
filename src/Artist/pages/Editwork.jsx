@@ -1,47 +1,103 @@
-import { useEffect, useState } from "react";
-import { addArtwork } from "../api";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { getArtworkAPI, updateArtworkAPI } from "../../Service/allApi";
 
-const Editwork = () => {
-  const { id } = useParams();
+function Editwork() {
+  const { id } = useParams(); // get the artwork ID from URL
   const navigate = useNavigate();
-  const [art, setArt] = useState({});
 
+  const [art, setArt] = useState({
+    title: "",
+    artist: "",
+    image: "",
+    description: "",
+    price: "",
+  });
+
+  // Fetch existing artwork details when component loads
   useEffect(() => {
-    getArtwork(id).then(res => setArt(res.data));
-  }, []);
+    const fetchArtwork = async () => {
+      try {
+        const response = await getArtworkAPI(id);
+        setArt(response.data); // since axios returns { data: {...} }
+      } catch (error) {
+        console.error("Error fetching artwork:", error);
+        alert("Failed to load artwork details");
+      }
+    };
+    fetchArtwork();
+  }, [id]);
 
-  const handleUpdate = async (e) => {
+  // Handle input changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setArt({ ...art, [name]: value });
+  };
+
+  // Handle form submit (update artwork)
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    await updateArtwork(id, art);
-    alert("Updated ✅");
-    navigate("/view");
+    try {
+      await updateArtworkAPI(id, art);
+      alert("✅ Artwork updated successfully!");
+      navigate("/"); // redirect to gallery or homepage
+    } catch (error) {
+      console.error("Error updating artwork:", error);
+      alert("Failed to update artwork");
+    }
   };
 
   return (
     <div className="card p-4 shadow">
       <h3 className="text-center fw-bold mb-3">Edit Artwork</h3>
 
-      <form onSubmit={handleUpdate}>
-        <input className="form-control mb-2" value={art.title || ""} 
-          onChange={e => setArt({...art, title:e.target.value})} />
+      <form onSubmit={handleSubmit}>
+        <input
+          className="form-control mb-2"
+          name="title"
+          value={art.title || ""}
+          onChange={handleChange}
+          placeholder="Title"
+        />
 
-        <input className="form-control mb-2" value={art.artist || ""} 
-          onChange={e => setArt({...art, artist:e.target.value})} />
+        <input
+          className="form-control mb-2"
+          name="artist"
+          value={art.artist || ""}
+          onChange={handleChange}
+          placeholder="Artist Name"
+        />
 
-        <input className="form-control mb-2" value={art.image || ""} 
-          onChange={e => setArt({...art, image:e.target.value})} />
+        <input
+          className="form-control mb-2"
+          name="image"
+          value={art.image || ""}
+          onChange={handleChange}
+          placeholder="Image URL"
+        />
 
-        <textarea className="form-control mb-2" value={art.desc || ""} 
-          onChange={e => setArt({...art, desc:e.target.value})}></textarea>
+        <textarea
+          className="form-control mb-2"
+          name="description"
+          value={art.description || ""}
+          onChange={handleChange}
+          placeholder="Description"
+        ></textarea>
 
-        <input className="form-control mb-2" value={art.price || ""} 
-          onChange={e => setArt({...art, price:e.target.value})} />
+        <input
+          className="form-control mb-2"
+          name="price"
+          value={art.price || ""}
+          onChange={handleChange}
+          placeholder="Price"
+        />
 
-        <button className="btn btn-dark w-100">Update</button>
+        <button type="submit" className="btn btn-dark w-100">
+          Update
+        </button>
       </form>
     </div>
   );
-};
+}
 
 export default Editwork;
