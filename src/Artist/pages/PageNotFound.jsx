@@ -12,22 +12,15 @@ import Editwork from "./Artist/pages/Editwork";
 import UserHome from "./user/pages/UserHome";
 import Collection from "./user/pages/Collection";
 import UserAbout from "./user/pages/UserAbout";
-import UserWish from "./user/pages/UserWish";
-import Cart from "./user/pages/Cart";
 
-// 🔑 Auth imports
-import Login from "./Authen/Login";
-import Register from "./Authen/Register";
+// ❌ 404 Page import
+import PageNotFound from "./Artist/pages/PageNotFound";
 
 function App() {
   return (
     <Routes>
-      {/* 🔐 Auth routes */}
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-
-      {/* Default route redirects to login */}
-      <Route path="/" element={<Navigate to="/login" replace />} />
+      {/* Redirect root to artist home */}
+      <Route path="/" element={<Navigate to="/home" />} />
 
       {/* 🎨 Artist routes */}
       <Route path="/home" element={<Home />} />
@@ -36,14 +29,12 @@ function App() {
       <Route path="/edit/:id" element={<Editwork />} />
 
       {/* 👤 User routes */}
-      <Route path="/userhome" element={<UserHome />} />
+      <Route path="/userHome" element={<UserHome />} />
       <Route path="/collection" element={<Collection />} />
       <Route path="/userabout" element={<UserAbout />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/wishlist" element={<UserWish />} />
 
-      {/* Redirect invalid URLs */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      {/* ❌ Page Not Found */}
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 }

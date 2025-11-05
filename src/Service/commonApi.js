@@ -11,8 +11,9 @@ const commonAPI = async (httpMethod, url, reqBody) => {
     const response = await axios(reqConfig);
     return response;
   } catch (error) {
-    return error;
+    throw error; // important
   }
 };
+
 
 export default commonAPI;

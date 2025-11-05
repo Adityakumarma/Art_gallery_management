@@ -53,7 +53,7 @@ const Footer = () => {
         {/* Footer Bottom */}
         <div className="text-center text-secondary small mt-3">
           © {new Date().getFullYear()} <strong>Galleria</strong> | Designed by
-          <span className="text-white"> Artist Module</span>
+          <span className="text-white"> Team2</span>
         </div>
       </div>
     </footer>
