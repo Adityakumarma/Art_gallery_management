@@ -122,7 +122,7 @@ function Collection() {
                         className="small mb-2"
                         style={{ color: "#f5f5f5", fontStyle: "italic" }}
                       >
-                        {art.category || "Untitled Category"}
+                        
                       </p>
                       <p className="fw-bold text-warning mb-3">
                         ₹{art.price || "—"}
