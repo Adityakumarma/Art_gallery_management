@@ -104,7 +104,7 @@ function Viewwork() {
                             fontSize: "1.1rem",
                           }}
                         >
-                          ₹{w.price} Million
+                          ₹{w.price} 
                         </p>
                       </div>
 
