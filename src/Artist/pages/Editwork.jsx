@@ -12,6 +12,7 @@ function Editwork() {
     title: "",
     artist: "",
     image: "",
+    description: "",
     price: "",
   });
 
@@ -62,6 +63,7 @@ function Editwork() {
           color: "white",
         }}
       >
+        {/* Inline style for white placeholders */}
         <style>
           {`
             ::placeholder {
@@ -118,6 +120,18 @@ function Editwork() {
             onFocus={(e) => (e.target.style.borderBottomColor = "white")}
             onBlur={(e) => (e.target.style.borderBottomColor = "#555")}
           />
+
+          <textarea
+            name="description"
+            value={art.description}
+            onChange={handleChange}
+            className="form-control mb-3 bg-transparent border border-secondary rounded-3 text-white"
+            placeholder="Description"
+            rows="3"
+            style={{ color: "#fff", caretColor: "white" }}
+            onFocus={(e) => (e.target.style.borderColor = "white")}
+            onBlur={(e) => (e.target.style.borderColor = "#555")}
+          ></textarea>
 
           <input
             name="price"
