@@ -3,13 +3,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import BASEURL from "../../Service/serviceURL"
-
+import BASEURL from "../../Service/serviceURL";
 
 function Viewwork() {
   const [works, setWorks] = useState([]);
 
-  // Fetch artworks from Render backend
+  // Fetch artworks from backend
   useEffect(() => {
     const fetchWorks = async () => {
       try {
@@ -19,7 +18,6 @@ function Viewwork() {
         console.error("Error fetching artworks:", err);
       }
     };
-
     fetchWorks();
   }, []);
 
@@ -27,7 +25,6 @@ function Viewwork() {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${BASEURL}/artworks/${id}`);
-      // Update state after deletion
       setWorks((prevWorks) => prevWorks.filter((w) => w.id !== id));
     } catch (err) {
       console.error("Error deleting artwork:", err);
@@ -37,30 +34,34 @@ function Viewwork() {
   return (
     <>
       <Navbar />
-      <div className="bg-white text-white min-vh-100 py-5">
+
+      <div className="bg-dark text-white min-vh-100 py-5">
         <div className="container">
           <div className="row justify-content-center mt-4">
             {works.length > 0 ? (
               works.map((w) => (
                 <div
-                  className="col-md-4 col-lg-3 col-sm-6 mb-4"
+                  className="col-md-4 col-lg-3 col-sm-6 mb-4 d-flex justify-content-center"
                   key={w.id}
-                  style={{ display: "flex", justifyContent: "center" }}
                 >
                   <div
-                    className="card shadow-lg rounded-4 overflow-hidden"
+                    className="card shadow-lg rounded-4 overflow-hidden d-flex flex-column justify-content-between"
                     style={{
                       background: "linear-gradient(145deg, #363232ff, #1a1a1aff)",
                       color: "white",
                       width: "100%",
                       maxWidth: "320px",
+                      minHeight: "460px", // ensures all boxes are equal height
                       transition: "transform 0.3s, box-shadow 0.3s",
                       border: "none",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.transform = "scale(1.05)";
                       e.currentTarget.style.boxShadow =
-                        "0 0 30px rgba(255,255,255,0.08)";
+                        "0 0 30px rgba(255,255,255,0.1)";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.transform = "scale(1)";
@@ -75,6 +76,7 @@ function Viewwork() {
                         style={{
                           height: "250px",
                           objectFit: "cover",
+                          width: "100%",
                           transition: "transform 0.4s ease",
                         }}
                         onMouseOver={(e) =>
@@ -86,20 +88,25 @@ function Viewwork() {
                       />
                     </div>
 
-                    <div className="card-body text-center">
-                      <h5 className="fw-bold text-uppercase">{w.title}</h5>
-                      <p className="mb-1" style={{ opacity: 0.8 }}>
-                        {w.artist}
-                      </p>
-                      <p
-                        style={{
-                          color: "#fff",
-                          fontWeight: "bold",
-                          fontSize: "1.1rem",
-                        }}
-                      >
-                        ${w.price}
-                      </p>
+                    <div
+                      className="card-body text-center d-flex flex-column justify-content-between"
+                      style={{ flex: "1" }}
+                    >
+                      <div>
+                        <h5 className="fw-bold text-uppercase">{w.title}</h5>
+                        <p className="mb-1" style={{ opacity: 0.8 }}>
+                          {w.artist}
+                        </p>
+                        <p
+                          style={{
+                            color: "#FFD700",
+                            fontWeight: "bold",
+                            fontSize: "1.1rem",
+                          }}
+                        >
+                          ₹{w.price} Million
+                        </p>
+                      </div>
 
                       <div className="d-flex justify-content-center gap-3 mt-3">
                         <Link
@@ -140,6 +147,7 @@ function Viewwork() {
           </div>
         </div>
       </div>
+
       <Footer />
     </>
   );
